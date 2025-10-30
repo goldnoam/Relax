@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export type Theme = 'light' | 'dark';
@@ -18,6 +17,13 @@ export interface Technique {
   illustration: React.FC<{ className?: string }>;
 }
 
+export type TechniqueTranslations = {
+  [key: string]: {
+    title: string;
+    description: string;
+  }
+};
+
 export type Translations = {
   [key in LanguageCode]: {
     title: string;
@@ -35,5 +41,6 @@ export type Translations = {
     error: string;
     errorMessage: string;
     aboutText: string;
+    techniques: TechniqueTranslations;
   }
 };

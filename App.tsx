@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Theme, LanguageCode, Technique } from './types';
-import { TECHNIQUES, LANGUAGES, TRANSLATIONS } from './constants';
+import { BASE_TECHNIQUES, LANGUAGES, TRANSLATIONS } from './constants';
 import { getGuidedScript } from './services/geminiService';
 import Header from './components/Header';
 import TechniqueCard from './components/TechniqueCard';
@@ -57,14 +56,23 @@ const App: React.FC = () => {
       />
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
-          {TECHNIQUES.map(technique => (
-            <TechniqueCard 
-              key={technique.id} 
-              technique={technique}
-              onGuide={handleOpenGuide}
-              guideMeText={translations.guideMe}
-            />
-          ))}
+          {BASE_TECHNIQUES.map(baseTechnique => {
+            const translatedContent = translations.techniques[baseTechnique.id];
+            const technique: Technique = {
+                ...baseTechnique,
+                title: translatedContent.title,
+                description: translatedContent.description,
+            };
+
+            return (
+              <TechniqueCard 
+                key={technique.id} 
+                technique={technique}
+                onGuide={handleOpenGuide}
+                guideMeText={translations.guideMe}
+              />
+            );
+          })}
         </div>
       </main>
 
